@@ -1,0 +1,60 @@
+import { useEffect } from 'react';
+import Chart from 'chart.js/auto';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
+
+export default function Home() {
+  useEffect(() => {
+    const ctx = document.getElementById('pibChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['1900', '1950', '2000', '2025'],
+        datasets: [{
+          label: 'PIB per capita (USD)',
+          data: [200, 1500, 5000, 15000],
+          borderColor: 'rgba(75, 192, 192, 1)',
+          fill: false,
+        }],
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { display: true },
+        },
+      },
+    });
+  }, []);
+
+  return (
+    <div style={{ margin: '20px' }}>
+      <h1>Desigualdades Internacionais</h1>
+
+      {/* Introdução */}
+      <section>
+        <h2>1. Introdução</h2>
+        <p><strong>Objetivo da Aula:</strong> Compreender as origens das disparidades econômicas entre os países.</p>
+        <p><strong>Atividade Inicial:</strong> Mapa interativo com a distribuição do PIB entre os continentes.</p>
+
+        <MapContainer center={[20, 0]} zoom={2} style={{ height: '400px', width: '100%' }}>
+          <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+          <Marker position={[0, 0]}>
+            <Popup>Distribuição de PIB Global</Popup>
+          </Marker>
+        </MapContainer>
+      </section>
+
+      {/* Gráfico PIB per capita */}
+      <section>
+        <h2>2. PIB per Capita ao Longo do Tempo</h2>
+        <canvas id="pibChart" width="400" height="200"></canvas>
+      </section>
+
+      {/* Indicadores de Desigualdade */}
+      <section>
+        <h2>3. Indicadores das Desigualdades</h2>
+        <canvas id="idhChart" width="400" height="200"></canvas>
+      </section>
+    </div>
+  );
+}
